@@ -9,6 +9,7 @@ package KiemTra01;
  * @author ADMIN
  */
 public class CD {
+    
     private String maSo, tenCD, caSi;
     private double giaBan;
     private int namPhatHanh;

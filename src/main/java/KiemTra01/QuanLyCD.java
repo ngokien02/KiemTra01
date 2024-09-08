@@ -14,69 +14,28 @@ import java.util.Scanner;
  * @author ADMIN
  */
 public class QuanLyCD {
-    private static ArrayList<CD> listCD = new ArrayList<>();
-    private static CD cd = null;
-    private static Scanner sc = new Scanner(System.in);
+    private ArrayList<CD> listCD = new ArrayList<>();
+    private CD cd = null;
+    private Scanner sc = new Scanner(System.in);
     
-    public static void menu(){
+    public void KhoiTaoDuLieu(){
         listCD.add(new CD("CD01", "Noi buon gac tro", "Quang Linh", 195000, 2018));
         listCD.add(new CD("CD02", "Bai tinh ca dem", "Duc Tuan", 185000, 2021));
         listCD.add(new CD("CD03", "Cau ho chieu que", "Nhieu ca si", 172000, 2022));
         listCD.add(new CD("CD04", "Tinh dau tinh cuoi", "Van Khanh", 139000, 2022));
         listCD.add(new CD("CD05", "Thanh pho mua bay", "Dan Nguyen", 182000, 2019));
-        
-        int chon = 0;
-        while(chon != 8){
-            System.out.println("\n=====QUAN LY BANG DIA=====");
-            System.out.print("\n1. Xuat thong tin va tong tri gia toan bo CD"
-                    + "\n2. Xuat cac CD phat hanh truoc nam 2020"
-                    + "\n3. Cac CD ten co chu \"tinh\""
-                    + "\n4. Xuat CD theo gia giam dan"
-                    + "\n5. Xoa CD theo ma so"
-                    + "\n6. Sua gia ban CD theo ma so"
-                    + "\n7. Tong tri gia cac CD trong cua hang"
-                    + "\n8. Ket thuc"
-                    + "\nChon hanh dong ban muon thuc hien: ");
-            chon = sc.nextInt();
-            switch(chon){
-                case 1:
-                    xuatVaTongCD();
-                    break;
-                case 2:
-                    CDtruoc2020();
-                    break;
-                case 3:
-                    CDChuTinh();
-                    break;
-                case 4:
-                    xuatGiamDan();
-                    break;
-                case 5:
-                    xoaTheoMS();
-                    break;
-                case 6:
-                    suaTheoMS();
-                    break;
-                case 7:
-                    tinhTong();
-                    break;
-                case 8:
-                    System.out.println("\nGood bye. Thanks for using our program!");
-                    break;
-            }
-        }
     }
     
-    public static void xuatVaTongCD(){
+    public void xuatVaTongCD(){
         double tong = 0;
         for(CD cd : listCD){
             tong += cd.getGiaBan();
             System.out.println(cd);
         }
-        System.out.println("\nTong tri gia CD trong cua hang: " + tong);
+        tinhTong();
     }
     
-    public static void CDtruoc2020(){
+    public void CDtruoc2020(){
         System.out.println("\nDanh sach cac CD phat hanh truoc 2020:\n");
         for(CD cd : listCD){
             if(cd.getNamPhatHanh() < 2020){
@@ -85,7 +44,7 @@ public class QuanLyCD {
         }
     }
     
-    public static void CDChuTinh(){
+    public void CDChuTinh(){
         String tinh = "tinh";
         System.out.println("\nCac CD ten co chua chu \"tinh\"");
         for(CD cd : listCD){
@@ -95,14 +54,14 @@ public class QuanLyCD {
         }
     }
     
-    public static void xuatGiamDan(){
+    public void xuatGiamDan(){
         Collections.sort(listCD, (CD cd2, CD cd1) -> Double.compare(cd1.getGiaBan(), cd2.getGiaBan()));
         for(CD cd : listCD){
             System.out.println(cd);
         }
     }
     
-    public static void xoaTheoMS(){
+    public void xoaTheoMS(){
         System.out.print("\nNhap ma so CD muon xoa: ");
         String cdXoa = sc.next();
         int thanhCong = 0;
@@ -120,30 +79,28 @@ public class QuanLyCD {
         }
     }
     
-    public static void suaTheoMS(){
-        int dem = 0;
+    public void suaTheoMS(){
+        Boolean timThay = false;
         System.out.print("\nNhap ma so cua CD ban muon sua: ");
         String MSSua = sc.next();
-        for (int i = 0; i < listCD.size(); i++) {
-            if(MSSua.equalsIgnoreCase(listCD.get(i).getMaSo())){
+        for (CD cd : listCD) {
+            if(cd.getMaSo().equalsIgnoreCase(MSSua)){
                 System.out.print("\nNhap gia ban muon sua: ");
                 double giaSua = sc.nextDouble();
-                listCD.get(i).setGiaBan(giaSua);
-                dem++;
-            }
-            else{
+                cd.setGiaBan(giaSua);
+                timThay = true;
                 break;
             }
         }
-        if(dem != 0){
-            System.out.println("\nSua thanh cong!");
+        if(!timThay){
+            System.out.println("\nKhong tim thay cd can sua!");
         }
         else{
-            System.out.println("\nKhong tim thay cd muon sua!");
+            System.out.println("\nSua thanh cong!");
         }
     }
     
-    public static void tinhTong(){
+    public void tinhTong(){
         int tong = 0;
         for(CD cd : listCD){
             tong+= cd.getGiaBan();
